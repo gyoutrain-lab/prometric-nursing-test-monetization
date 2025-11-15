@@ -8,7 +8,7 @@
   body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f6f6;
+    background: linear-gradient(to bottom, #e0f7fa, #f0f6f6);
     color: #003344;
   }
 
@@ -16,20 +16,24 @@
     width: 100%;
     max-height: 40vh;
     object-fit: cover;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   }
 
   .water-bg {
     width: 100%;
     height: 45vh;
     background: url('https://github.com/gyoutrain-lab/prometric-nursing-test-monetization/blob/main/assets/icon17%20(1).jpg?raw=1') center/cover no-repeat;
-    opacity: 0.25;
+    opacity: 0.2;
   }
 
   .title-text {
     margin-top: -30vh;
-    font-size: 28px;
-    font-weight: 600;
+    font-size: 30px;
+    font-weight: 700;
     text-align: center;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
   }
 
   .qr-container {
@@ -37,6 +41,10 @@
     right: 2%;
     bottom: 18%;
     width: 12%;
+    border: 2px solid #0077aa;
+    border-radius: 12px;
+    padding: 4px;
+    background: rgba(255,255,255,0.8);
   }
   .qr-container img { width: 100%; border-radius: 8px; }
 
@@ -44,32 +52,47 @@
     position: absolute;
     left: 2%;
     bottom: 20%;
-    max-width: 300px;
+    max-width: 320px;
+    padding: 16px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   }
   .form-container input {
-    padding: 12px;
+    padding: 14px;
     width: 100%;
-    margin-bottom: 12px;
-    border-radius: 6px;
+    margin-bottom: 14px;
+    border-radius: 8px;
     border: 1px solid #888;
     font-size: 16px;
+    transition: 0.3s;
+  }
+  .form-container input:focus {
+    border-color: #0077aa;
+    outline: none;
+    box-shadow: 0 0 6px rgba(0,119,170,0.4);
   }
 
   .center-buttons {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 25px;
   }
   .btn {
-    padding: 14px 24px;
+    padding: 16px 28px;
     background: #0077aa;
     color: #fff;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 18px;
     cursor: pointer;
     text-decoration: none;
-    margin: 10px;
+    margin: 12px;
+    transition: 0.3s;
+  }
+  .btn:hover:not(.disabled) {
+    background: #005f80;
+    transform: translateY(-2px);
   }
   .btn.disabled {
     background: #ccc;
@@ -80,19 +103,26 @@
     position: absolute;
     left: 2%;
     bottom: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
   }
   .contact-icons img {
-    width: 40px;
-    margin: 6px;
+    width: 44px;
+    border-radius: 50%;
+    transition: 0.2s;
+  }
+  .contact-icons img:hover {
+    transform: scale(1.1);
   }
 
   .unlock-container {
-    margin-top: 15px;
+    margin-top: 10px;
   }
   .unlock-container input {
-    padding: 12px;
-    width: 200px;
-    border-radius: 6px;
+    padding: 14px;
+    width: 100%;
+    border-radius: 8px;
     border: 1px solid #888;
     font-size: 16px;
   }
@@ -134,7 +164,6 @@ const nameInput = document.getElementById('name');
 const waInput = document.getElementById('wa');
 const confirmBtn = document.getElementById('confirmBtn');
 
-// Activate confirmation button only when name and WA filled
 function checkInputs() {
   if(nameInput.value.trim() && waInput.value.trim()) {
     confirmBtn.classList.remove('disabled');
@@ -150,14 +179,13 @@ function sendConfirmation() {
   const n = nameInput.value.trim();
   const w = waInput.value.trim();
 
-  const msg = encodeURIComponent(`Payment Proof and Confirmation%0AName: ${n}%0AWA: ${w}%0ARequesting unlock code.`);
+  const msg = encodeURIComponent(`Payment Proof and Confirmation%0AName: ${n}%0AWA: ${w}%0ARequesting randomized unlock code.`);
   window.open(`https://wa.me/6285399652487?text=${msg}`, '_blank');
 
-  alert('Admin will receive your request and generate a randomized unlock code for you. Enter the code manually provided by Admin in the unlock code field.');
+  alert('Admin will receive your request and generate a randomized unlock code. Enter the code manually provided by Admin in the unlock code field.');
   document.getElementById('unlockCode').disabled = false;
 }
 
-// Enable Continue button only when correct unlock code entered (admin provides code manually)
 document.getElementById('unlockCode').addEventListener('input', function() {
   const code = this.value.trim();
   if (code.length > 0) {
