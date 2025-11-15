@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Payment Confirmation • Nursing Prometric</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f0f6f6;
+    text-align: center;
+  }
+
+  /* Top half image */
+  .top-img {
+    width: 100%;
+    max-height: 45vh;
+    object-fit: cover;
+  }
+
+  /* Flowing water background half page */
+  .water-bg {
+    width: 100%;
+    height: 45vh;
+    background: url('https://github.com/gyoutrain-lab/prometric-nursing-test-monetization/blob/main/assets/icon17%20(1).jpg?raw=1') center/cover no-repeat;
+    opacity: 0.35;
+  }
+
+  .title-text {
+    margin-top: -30vh;
+    font-size: 24px;
+    font-weight: bold;
+    color: #003344;
+    position: relative;
+    z-index: 2;
+  }
+
+  .qr-container {
+    position: absolute;
+    right: 2%;
+    bottom: 15%;
+    width: 12%;
+  }
+  .qr-container img { width: 100%; }
+
+  .contact-icons img {
+    width: 40px;
+    margin: 6px;
+  }
+
+  .btn {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0077aa;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 18px;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  form {
+    margin-top: 25px;
+  }
+
+  input {
+    padding: 10px;
+    width: 70%;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #888;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP HALF IMAGE -->
+<img class="top-img" src="https://github.com/gyoutrain-lab/prometric-nursing-test-monetization/blob/main/assets/icon17%20(1).jpg?raw=1" />
+
+<div class="water-bg"></div>
+
+<div class="title-text">Check the QR Dana to put IDR 50k</div>
+
+<!-- QR on bottom-right -->
+<div class="qr-container">
+  <img src="https://github.com/gyoutrain-lab/prometric-nursing-test-monetization/blob/main/assets/dana_qr.png?raw=1" />
+</div>
+
+<!-- CONTACT ICONS -->
+<div class="contact-icons">
+  <a href="tel:+6285399652487"><img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" /></a>
+  <a href="https://wa.me/6285399652487" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" /></a>
+  <a href="mailto:gyoutrain@gmail.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" /></a>
+  <a href="https://web.facebook.com/gyouskill/?_rdc=1&_rdr#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" /></a>
+  <a href="https://www.instagram.com/etkyogya?igsh=cHEwZ3lycXhqNHc1" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" /></a>
+</div>
+
+<!-- CONFIRMATION FORM -->
+<form id="confirmForm">
+  <input id="name" placeholder="Your Name" required /><br>
+  <input id="wa" placeholder="WhatsApp Number" required /><br>
+  <div class="btn" onclick="sendConfirmation()">Confirmation</div>
+</form>
+
+<script>
+function sendConfirmation() {
+  const n = document.getElementById('name').value.trim();
+  const w = document.getElementById('wa').value.trim();
+  if (!n || !w) return alert('Fill all fields');
+
+  const msg = encodeURIComponent(
+    `Payment Confirmation%0AName: ${n}%0AWA: ${w}`
+  );
+
+  // Notify admin via WhatsApp
+  window.open(`https://wa.me/6285399652487?text=${msg}`, '_blank');
+
+  alert('Admin will send your unlock code manually shortly.');
+}
+</script>
+
+<!-- CONTINUE BUTTON -->
+<a class="btn" href="https://gyoutrain-lab.github.io/nursing-prometric-test-allinone500/">Continue the Test</a>
+
+</body>
+</html>
