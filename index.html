@@ -17,19 +17,49 @@ function checkInputs() {
     confirmBtn.classList.add('disabled');
   }
 }
+const nameInput = document.getElementById('nameInput');
+const waInput = document.getElementById('waInput');
+const confirmBtn = document.getElementById('confirmBtn');
+const unlockCode = document.getElementById('unlockCode');
+
+// Enable confirm button only when both fields are filled
+function checkInputs() {
+  if (nameInput.value.trim() !== "" && waInput.value.trim() !== "") {
+    confirmBtn.disabled = false;
+  } else {
+    confirmBtn.disabled = true;
+  }
+}
+
 nameInput.addEventListener('input', checkInputs);
 waInput.addEventListener('input', checkInputs);
 
-confirmBtn.addEventListener('click', function() {
+confirmBtn.addEventListener('click', () => {
   const n = nameInput.value.trim();
   const w = waInput.value.trim();
-  if(!n || !w) return alert('Please fill in all fields.');
 
-  const msg = encodeURIComponent(`Payment Proof and Confirmation\nName: ${n}\nWA: ${w}\nRequesting unlock code.`);
-  window.open(`https://wa.me/6285399652487?text=${msg}`, '_blank');
+  if (!n || !w) {
+    alert('Please fill in all fields.');
+    return;
+  }
 
-  alert('Admin will receive your request and provide a randomized unlock code via WhatsApp.');
-  document.getElementById('unlockCode').disabled = false;
+  const msg =
+    `Payment Proof and Confirmation\n` +
+    `Name: ${n}\n` +
+    `WA: ${w}\n` +
+    `Requesting unlock code.`;
+
+  const waURL = `https://wa.me/6285399652487?text=${encodeURIComponent(msg)}`;
+
+  // Open WhatsApp
+  window.open(waURL, "_blank");
+
+  alert("Admin will receive your request and send your unlock code.");
+
+  // Allow user to enter unlock code after contacting admin
+  unlockCode.disabled = false;
+});
+
 });
 
 // Enable Continue button only after unlock code is entered
