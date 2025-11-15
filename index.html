@@ -117,7 +117,7 @@
 </div>
 
 <div class="center-buttons">
-  <div id="confirmBtn" class="btn" onclick="sendConfirmation()">Send Payment Proof & Confirmation</div>
+  <div id="confirmBtn" class="btn disabled" onclick="sendConfirmation()">Send Payment Proof & Confirmation</div>
   <a id="continueBtn" class="btn disabled" href="#">Continue the Test</a>
 </div>
 
@@ -130,20 +130,34 @@
 </div>
 
 <script>
-function sendConfirmation() {
-  const n = document.getElementById('name').value.trim();
-  const w = document.getElementById('wa').value.trim();
-  if (!n || !w) return alert('Fill all fields');
+const nameInput = document.getElementById('name');
+const waInput = document.getElementById('wa');
+const confirmBtn = document.getElementById('confirmBtn');
 
-  const msg = encodeURIComponent(`Payment Proof Submitted%0AName: ${n}%0AWA: ${w}`);
+// Activate confirmation button only when name and WA filled
+function checkInputs() {
+  if(nameInput.value.trim() && waInput.value.trim()) {
+    confirmBtn.classList.remove('disabled');
+  } else {
+    confirmBtn.classList.add('disabled');
+  }
+}
+nameInput.addEventListener('input', checkInputs);
+waInput.addEventListener('input', checkInputs);
+
+function sendConfirmation() {
+  if(confirmBtn.classList.contains('disabled')) return;
+  const n = nameInput.value.trim();
+  const w = waInput.value.trim();
+
+  const msg = encodeURIComponent(`Payment Proof and Confirmation%0AName: ${n}%0AWA: ${w}%0ARequesting unlock code.`);
   window.open(`https://wa.me/6285399652487?text=${msg}`, '_blank');
-  alert('Admin will verify your payment. Unlock code will be provided manually via WhatsApp.');
-  
-  // User cannot access Continue button until admin approval via unlock code input
+
+  alert('Admin will receive your request and generate a randomized unlock code for you. Enter the code manually provided by Admin in the unlock code field.');
   document.getElementById('unlockCode').disabled = false;
 }
 
-// Enable Continue button only when valid unlock code is entered
+// Enable Continue button only when correct unlock code entered (admin provides code manually)
 document.getElementById('unlockCode').addEventListener('input', function() {
   const code = this.value.trim();
   if (code.length > 0) {
