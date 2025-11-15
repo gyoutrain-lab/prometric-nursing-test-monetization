@@ -10,6 +10,7 @@
     font-family: Arial, sans-serif;
     background: #f0f6f6;
     text-align: center;
+    position: relative;
   }
 
   /* Top half image */
@@ -44,13 +45,30 @@
   }
   .qr-container img { width: 100%; }
 
-  .contact-icons img {
-    width: 40px;
-    margin: 6px;
+  /* Left side form container */
+  .form-container {
+    position: absolute;
+    left: 2%;
+    bottom: 20%;
+    text-align: left;
+    z-index: 2;
+  }
+
+  .form-container input {
+    padding: 10px;
+    width: 250px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #888;
+    display: block;
+  }
+
+  .center-buttons {
+    position: relative;
+    margin-top: 20px;
   }
 
   .btn {
-    margin-top: 25px;
     padding: 12px 20px;
     background: #0077aa;
     color: #fff;
@@ -59,18 +77,23 @@
     display: inline-block;
     cursor: pointer;
     text-decoration: none;
+    margin: 10px;
   }
 
-  form {
-    margin-top: 25px;
+  .btn.disabled {
+    background: #ccc;
+    cursor: not-allowed;
   }
 
-  input {
-    padding: 10px;
-    width: 70%;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    border: 1px solid #888;
+  .contact-icons {
+    position: absolute;
+    left: 2%;
+    bottom: 2%;
+  }
+
+  .contact-icons img {
+    width: 40px;
+    margin: 6px;
   }
 </style>
 </head>
@@ -88,7 +111,19 @@
   <img src="https://github.com/gyoutrain-lab/prometric-nursing-test-monetization/blob/main/assets/dana_qr.png?raw=1" />
 </div>
 
-<!-- CONTACT ICONS -->
+<!-- LEFT SIDE FORM -->
+<div class="form-container">
+  <input id="name" placeholder="Your Name" />
+  <input id="wa" placeholder="WhatsApp Number" />
+</div>
+
+<!-- CENTER BUTTONS -->
+<div class="center-buttons">
+  <div id="confirmBtn" class="btn" onclick="sendConfirmation()">Confirmation</div>
+  <a id="continueBtn" class="btn disabled" href="#">Continue the Test</a>
+</div>
+
+<!-- CONTACT ICONS LEFT BOTTOM -->
 <div class="contact-icons">
   <a href="tel:+6285399652487"><img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" /></a>
   <a href="https://wa.me/6285399652487" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" /></a>
@@ -96,13 +131,6 @@
   <a href="https://web.facebook.com/gyouskill/?_rdc=1&_rdr#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" /></a>
   <a href="https://www.instagram.com/etkyogya?igsh=cHEwZ3lycXhqNHc1" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" /></a>
 </div>
-
-<!-- CONFIRMATION FORM -->
-<form id="confirmForm">
-  <input id="name" placeholder="Your Name" required /><br>
-  <input id="wa" placeholder="WhatsApp Number" required /><br>
-  <div class="btn" onclick="sendConfirmation()">Confirmation</div>
-</form>
 
 <script>
 function sendConfirmation() {
@@ -118,11 +146,12 @@ function sendConfirmation() {
   window.open(`https://wa.me/6285399652487?text=${msg}`, '_blank');
 
   alert('Admin will send your unlock code manually shortly.');
+
+  // Enable Continue button after admin sends code manually
+  document.getElementById('continueBtn').classList.remove('disabled');
+  document.getElementById('continueBtn').href = 'https://gyoutrain-lab.github.io/nursing-prometric-test-allinone500/';
 }
 </script>
-
-<!-- CONTINUE BUTTON -->
-<a class="btn" href="https://gyoutrain-lab.github.io/nursing-prometric-test-allinone500/">Continue the Test</a>
 
 </body>
 </html>
