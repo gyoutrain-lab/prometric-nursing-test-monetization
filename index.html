@@ -147,7 +147,7 @@
 </div>
 
 <div class="center-buttons">
-  <div id="confirmBtn" class="btn disabled" onclick="sendConfirmation()">Send Payment Proof & Confirmation</div>
+  <button id="confirmBtn" class="btn disabled" disabled>Send Payment Proof & Confirmation</button>
   <a id="continueBtn" class="btn disabled" href="#">Continue the Test</a>
 </div>
 
@@ -163,37 +163,41 @@
 const nameInput = document.getElementById('name');
 const waInput = document.getElementById('wa');
 const confirmBtn = document.getElementById('confirmBtn');
+const unlockInput = document.getElementById('unlockCode');
+const continueBtn = document.getElementById('continueBtn');
 
 function checkInputs() {
   if(nameInput.value.trim() && waInput.value.trim()) {
+    confirmBtn.disabled = false;
     confirmBtn.classList.remove('disabled');
   } else {
+    confirmBtn.disabled = true;
     confirmBtn.classList.add('disabled');
   }
 }
 nameInput.addEventListener('input', checkInputs);
 waInput.addEventListener('input', checkInputs);
 
-function sendConfirmation() {
-  if(confirmBtn.classList.contains('disabled')) return;
+confirmBtn.addEventListener('click', function() {
   const n = nameInput.value.trim();
   const w = waInput.value.trim();
+  if(!n || !w) return alert('Please fill in all fields.');
 
-  const msg = encodeURIComponent(`Payment Proof and Confirmation%0AName: ${n}%0AWA: ${w}%0ARequesting randomized unlock code.`);
+  const msg = encodeURIComponent(`Payment Proof and Confirmation\nName: ${n}\nWA: ${w}\nRequesting randomized unlock code.`);
   window.open(`https://wa.me/6285399652487?text=${msg}`, '_blank');
 
-  alert('Admin will receive your request and generate a randomized unlock code. Enter the code manually provided by Admin in the unlock code field.');
-  document.getElementById('unlockCode').disabled = false;
-}
+  alert('Admin will receive your request and provide a randomized unlock code via WhatsApp. Enter the code manually in the unlock code field.');
+  unlockInput.disabled = false;
+});
 
-document.getElementById('unlockCode').addEventListener('input', function() {
+unlockInput.addEventListener('input', function() {
   const code = this.value.trim();
-  if (code.length > 0) {
-    document.getElementById('continueBtn').classList.remove('disabled');
-    document.getElementById('continueBtn').href = 'https://gyoutrain-lab.github.io/nursing-prometric-test-allinone500/';
+  if(code.length > 0){
+    continueBtn.classList.remove('disabled');
+    continueBtn.href = 'https://gyoutrain-lab.github.io/nursing-prometric-test-allinone500/';
   } else {
-    document.getElementById('continueBtn').classList.add('disabled');
-    document.getElementById('continueBtn').href = '#';
+    continueBtn.classList.add('disabled');
+    continueBtn.href = '#';
   }
 });
 </script>
